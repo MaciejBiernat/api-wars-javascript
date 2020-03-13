@@ -1,8 +1,18 @@
 
 
 
-fetch('https://swapi.co/api/planets/')  // set the path; the method is GET by default, but can be modified with a second parameter
-.then((response) => response.json())  // parse JSON format into JS object
+let planetsData = fetch('https://swapi.co/api/planets/')
+.then((response) => response.json())
 .then((data) => {
-    console.log(data.name);
-})
+    tableDisplay(data.results);
+});
+
+
+
+// let tableDisplay = document.getElementById('tbody');
+
+let tableDisplay = function f(api_data) {
+    for (let row of api_data){
+        console.log(row)
+    }
+}
