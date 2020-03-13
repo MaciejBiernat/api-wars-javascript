@@ -40,11 +40,17 @@
         </div>
 </nav>
 
-<form action="action_page.php">
-  <div class="container">
+
+<form action="/registration" method="POST">
+  <div class="container col-md-10">
+
+
     <h1 style="margin-top: 25px;">Register</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
+
+      <label for="user"><b>User</b></label>
+    <input type="text" placeholder="Enter Username" name="user" required>
 
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
@@ -58,9 +64,16 @@
 
     <button type="submit" class="registerbtn">Register</button>
   </div>
-
-  <div class="container signin">
+ </div>
+  <div class="container col-md-10">
     <p>Already have an account? <a href="/login">Sign in</a>.</p>
+      <h4 style="color:red">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %} {{ message }} {% endfor %}
+        {% endif %}
+    {% endwith %}
+    </h4>
   </div>
 </form>
 
