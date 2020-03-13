@@ -8,7 +8,11 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/')
 @app.route('/index.html')
 def route():
-    return render_template("index.html" )
+    if 'username' in session:
+        username_info = f"Signed in as {session['username']}"
+        return render_template('index.html', username_info = username_info)
+    else:
+        return render_template("index.html" )
 
 @app.route('/registration', methods=['POST', 'GET'])
 def registration():
@@ -28,19 +32,22 @@ def registration():
         data_manager.add_user(registration_data)
         register_conf = 'Registration successful. Please sign in to continue.'
         return redirect(url_for('login', register_conf=register_conf))
-
-    return render_template("registration.html" )
+    if 'username' in session:
+        username_info = f"Signed in as {session['username']}"
+        return render_template('registration.html', username_info=username_info )
+    else:
+        return render_template("registration.html" )
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    # register_conf = request.args['register_conf']
+
     login_data = {}
     if request.method == 'POST':
         login_data['user'] = request.form['email']
         login_data['email'] = request.form['email']
         login_data['password'] = request.form['psw']
-        register_conf = data_manager.check_user(login_data)
-        if not register_conf:
+
+        if not data_manager.check_user(login_data):
             if data_manager.check_login_password(login_data):
                 session['username'] = request.form['email']
                 return redirect((url_for('route')))
@@ -49,7 +56,12 @@ def login():
         register_conf = "Wrong email/username or password"
         return render_template("login.html", register_conf=register_conf)
 
-    return render_template("login.html", )
+    if 'username' in session:
+        username_info = f"Signed in as {session['username']}"
+        return render_template('login.html', username_info=username_info)
+    else:
+        register_conf = request.args['register_conf']
+        return render_template("login.html", register_conf=register_conf )
 
 if __name__ == '__main__':
     app.run(
