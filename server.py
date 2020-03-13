@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, escape, session
 import data_manager
 
 app = Flask(__name__)
@@ -25,15 +25,31 @@ def registration():
         if not register_conf:
             flash('User with submitted data already exist.')
             return render_template("registration.html")
+        data_manager.add_user(registration_data)
+        register_conf = 'Registration successful. Please sign in to continue.'
         return redirect(url_for('login', register_conf=register_conf))
 
     return render_template("registration.html" )
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    # register_conf = request.args['register_conf']
+    login_data = {}
+    if request.method == 'POST':
+        login_data['user'] = request.form['email']
+        login_data['email'] = request.form['email']
+        login_data['password'] = request.form['psw']
+        register_conf = data_manager.check_user(login_data)
+        if not register_conf:
+            if data_manager.check_login_password(login_data):
+                session['username'] = request.form['email']
+                return redirect((url_for('route')))
+            register_conf = "Wrong email/username or password"
+            return render_template("login.html", register_conf=register_conf)
+        register_conf = "Wrong email/username or password"
+        return render_template("login.html", register_conf=register_conf)
 
-    register_conf = request.args['register_conf']
-    return render_template("login.html", register_conf=register_conf)
+    return render_template("login.html", )
 
 if __name__ == '__main__':
     app.run(
