@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, flash
-
+from flask import Flask, render_template, request, flash, redirect, url_for
+import data_manager
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -21,21 +21,19 @@ def registration():
         registration_data['email'] = request.form['email']
         registration_data['password'] = request.form['psw']
         registration_data['psw-repeat'] = request.form['psw-repeat']
-
-
-
-        print(registration_data)
-
-        return render_template("registration.html")
-
-
-
+        register_conf = data_manager.check_user(registration_data)
+        if not register_conf:
+            flash('User with submitted data already exist.')
+            return render_template("registration.html")
+        return redirect(url_for('login', register_conf=register_conf))
 
     return render_template("registration.html" )
 
 @app.route('/login')
 def login():
-    return render_template("login.html" )
+
+    register_conf = request.args['register_conf']
+    return render_template("login.html", register_conf=register_conf)
 
 if __name__ == '__main__':
     app.run(
