@@ -9,17 +9,20 @@ let endTr = '</tr>';
 
 
 
-let insertData = function (cell) {
-    tableInsert.innerHTML += `<td>${cell}</td>`
-};
-
-
 let displayRow = function f(apiData) {
     apiData.forEach(row => {
 
         for (i = 0; i < keys.length; i++){
-            tr += `<td> ${row[keys[i]]} </td>`;
-
+            if (keys[i] != 'residents') {
+                tr += `<td> ${row[keys[i]]} </td>`;
+            }
+            else if (row['residents'] != '') {
+                tr += `<td> <button class="btn btn-primary" type="button">Residents
+    <span class="residents"></span> ${row['residents'].length} </button></td>`;
+            }
+            else {
+                tr += `<td> ${row[keys[i]]} </td>`
+            }
         }
         tr+=endTr
     });
