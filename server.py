@@ -63,6 +63,12 @@ def login():
         register_conf = request.args['register_conf']
         return render_template("login.html", register_conf=register_conf )
 
+@app.route('/logout')
+def logout():
+    [session.pop(key) for key in list(session.keys())]
+    render_template('index.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
