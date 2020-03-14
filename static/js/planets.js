@@ -1,6 +1,6 @@
 
 const keys = [
-    'name', 'diameter', 'climate', 'terrain', 'surface_water', 'population', 'residents'
+    'name', 'diameter', 'climate', 'terrain', 'surface_water', 'population', 'residents', 'vote'
 ];
 
 let tableInsert = document.getElementById('tbody');
@@ -8,17 +8,17 @@ let tr = '<tr>';
 let endTr = '</tr>';
 
 
-
-let displayRow = function f(apiData) {
-    apiData.forEach(row => {
-
+let displayPage = function f(planetsData) {
+    planetsData.forEach(row => {
         for (i = 0; i < keys.length; i++){
-            if (keys[i] != 'residents') {
+            if (keys[i] === 'vote'){
+                tr += `<td> <button class="btn btn-secondary vote" type="button"> Vote </button></td>`;;
+            }
+            else if (keys[i] != 'residents') {
                 tr += `<td> ${row[keys[i]]} </td>`;
             }
             else if (row['residents'] != '') {
-                tr += `<td> <button class="btn btn-primary" type="button">Residents
-    <span class="residents"></span> ${row['residents'].length} </button></td>`;
+                tr += `<td> <button class="btn btn-primary residents" type="button">Residents ${row['residents'].length} </button></td>`;
             }
             else {
                 tr += `<td> ${row[keys[i]]} </td>`
@@ -29,44 +29,41 @@ let displayRow = function f(apiData) {
     tableInsert.innerHTML += tr + endTr
     };
 
-let planetsData = fetch('https://swapi.co/api/planets/')
-.then((response) => response.json())
-.then((data) => {
-    displayRow(data.results);
+
+let inputApi = 'https://swapi.co/api/planets/';
+let nextInputApi = "";
+let prevInputApi = "";
+
+let planetsData = function (inputApi){
+    fetch(inputApi)
+        .then((response) => response.json())
+        .then((data) => {
+            nextInputApi = data.next;
+            prevInputApi = data.previous;
+           displayPage(data.results)
+        })
+};
+
+planetsData(inputApi);
+
+// add to main
+
+
+// displayPage(planetsData);
+
+let nextButton = document.getElementById('next');
+let prevButton = document.getElementById('prev');
+
+nextButton.addEventListener('click', function (event) {
+       for (i=0; i<10; i++) {
+           document.getElementById("tbody").deleteRow(-1);
+           tr = '<tr>';
+       }
+    planetsData(nextInputApi)
 });
 
-planetsData;
-
-
-
-
-
-
-
-
-
-
-
-//
-// let tableDisplay = function f(apiData) {
-//     for (let row in apiData) {
-//         console.log(row);
-//         insertRow(row);
-//         tableInsert.innerHTML += tr + endTr;
-//     }
-// };
-// //
-// let insertRow = function f(row){
-//     for (i = 0; i < keys.length; i++){
-//         tr += `<td> ${row[keys[i]]} </td>`;
-//         console.log(tr)
-//     }
-// };
-
-
-// let insertRow = function f(row) {
-//     for (let key of keys){
-//         tr += `<td> ${row[key]} </td>`;
-//     }
-//     tableInsert.innerHTML += tr + endTr;
-// }
+prevButton.addEventListener('click', function (event) {
+    tableInsert.innerHTML = "";
+    tr = '<tr>';
+    planetsData(prevInputApi)
+});

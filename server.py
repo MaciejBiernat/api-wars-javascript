@@ -10,9 +10,9 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 def route():
     if 'username' in session:
         username_info = f"Signed in as {session['username']}"
-        return render_template('index.html', username_info = username_info)
+        return render_template('index.html', username_info = username_info,)
     else:
-        return render_template("index.html" )
+        return render_template("index.html", )
 
 @app.route('/registration', methods=['POST', 'GET'])
 def registration():
