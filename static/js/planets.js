@@ -18,7 +18,7 @@ let displayPage = function f(planetsData) {
                 tr += `<td> ${row[keys[i]]} </td>`;
             }
             else if (row['residents'] != '') {
-                tr += `<td> <button class="btn btn-primary residents" type="button">Residents ${row['residents'].length} </button></td>`;
+                tr += `<td> <button class="btn btn-primary residents" data-api-inputs="${row['residents']}" type="button">Residents ${row['residents'].length} </button></td>`;
             }
             else {
                 tr += `<td> ${row[keys[i]]} </td>`
@@ -49,7 +49,7 @@ planetsData(inputApi);
 // add to main
 
 
-// displayPage(planetsData);
+$('#myModal').modal('show')
 
 let nextButton = document.getElementById('next');
 let prevButton = document.getElementById('prev');
