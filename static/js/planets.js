@@ -52,8 +52,6 @@ planetsData(inputApi);
 // add to main
 
 
-// $('#myModal').modal('show')
-
 let nextButton = document.getElementById('next');
 let prevButton = document.getElementById('prev');
 
@@ -77,7 +75,8 @@ let showResidents = function () {
     residents.forEach(item => {
         console.log('dupa1');
         item.addEventListener('click', function (event) {
-            console.log(this.dataset.apiInputs)
+            document.querySelector('.modal-body').innerHTML = (this.dataset.apiInputs);
+            $('#myModal').modal('show')
         })
     })
 };
