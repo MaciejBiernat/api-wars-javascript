@@ -3,6 +3,10 @@ const keys = [
     'name', 'diameter', 'climate', 'terrain', 'surface_water', 'population', 'residents', 'vote'
 ];
 
+const charKeys = [
+    "name", "height", "mass", "hair_color", "skin_color", "eye_color", "birth_year", "gender"
+];
+
 const tableInsert = document.getElementById('tbody');
 let tr = '<tr>';
 let endTr = '</tr>';
@@ -73,25 +77,33 @@ prevButton.addEventListener('click', function (event) {
 let showResidents = function () {
     let residents = document.querySelectorAll('.residents');
     residents.forEach(item => {
-        console.log('dupa1');
         item.addEventListener('click', function (event) {
-            document.getElementById('modalbody').innerHTML = `<tr><td>${this.dataset.apiInputs}</td><tr>`;
+            let charApi = this.dataset.apiInputs.split(',');
+            charApi.forEach( input => {
+                addToModalTable(input)
+            });
             $('#myModal').modal('show')
         })
     })
 };
 
 
-// let planetsData = function (inputApi){
-//     fetch(inputApi)
-//         .then((response) => response.json())
-//         .then((data) => {
-//             displayModal(data.results);
-//
-//         })
-// };
+let addToModalTable = function (inputApi){
+    fetch(inputApi)
+        .then((response) => response.json())
+        .then((data) => {
+            displayModal(data);
+        })
+};
 
-
+let displayModal = function (charData) {
+    let trModal = `<tr>`;
+    let trEndModal = `</tr>`;
+    for (i=0; i<charKeys.length; i++){
+        trModal += `<td>${charData[charKeys[i]]}</td>`
+    }
+    document.getElementById('modalbody').innerHTML += trModal + trEndModal;
+};
 
 
 
