@@ -30,6 +30,8 @@ let displayPage = function f(planetsData) {
     };
 
 
+
+
 let inputApi = 'https://swapi.co/api/planets/';
 let nextInputApi = "";
 let prevInputApi = "";
@@ -40,7 +42,8 @@ let planetsData = function (inputApi){
         .then((data) => {
             nextInputApi = data.next;
             prevInputApi = data.previous;
-           displayPage(data.results)
+            displayPage(data.results);
+            showResidents()
         })
 };
 
@@ -49,7 +52,7 @@ planetsData(inputApi);
 // add to main
 
 
-$('#myModal').modal('show')
+// $('#myModal').modal('show')
 
 let nextButton = document.getElementById('next');
 let prevButton = document.getElementById('prev');
@@ -67,3 +70,28 @@ prevButton.addEventListener('click', function (event) {
     tr = '<tr>';
     planetsData(prevInputApi)
 });
+
+
+let showResidents = function () {
+    let residents = document.querySelectorAll('.residents');
+    residents.forEach(item => {
+        console.log('dupa1');
+        item.addEventListener('click', function (event) {
+            console.log(this.dataset.apiInputs)
+        })
+    })
+};
+
+
+
+// residents.forEach(residentButton => {
+//     residentButton.addEventListener('click', function (event) {
+//     console.log('dupa')
+// })
+// });
+
+
+
+
+
+
