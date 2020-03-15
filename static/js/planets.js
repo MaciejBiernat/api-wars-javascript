@@ -3,7 +3,7 @@ const keys = [
     'name', 'diameter', 'climate', 'terrain', 'surface_water', 'population', 'residents', 'vote'
 ];
 
-let tableInsert = document.getElementById('tbody');
+const tableInsert = document.getElementById('tbody');
 let tr = '<tr>';
 let endTr = '</tr>';
 
@@ -75,19 +75,21 @@ let showResidents = function () {
     residents.forEach(item => {
         console.log('dupa1');
         item.addEventListener('click', function (event) {
-            document.querySelector('.modal-body').innerHTML = (this.dataset.apiInputs);
+            document.getElementById('modalbody').innerHTML = `<tr><td>${this.dataset.apiInputs}</td><tr>`;
             $('#myModal').modal('show')
         })
     })
 };
 
 
-
-// residents.forEach(residentButton => {
-//     residentButton.addEventListener('click', function (event) {
-//     console.log('dupa')
-// })
-// });
+// let planetsData = function (inputApi){
+//     fetch(inputApi)
+//         .then((response) => response.json())
+//         .then((data) => {
+//             displayModal(data.results);
+//
+//         })
+// };
 
 
 
