@@ -78,6 +78,7 @@ let showResidents = function () {
     let residents = document.querySelectorAll('.residents');
     residents.forEach(item => {
         item.addEventListener('click', function (event) {
+            document.getElementById('modalbody').innerHTML = ''; //clearing content inmodal
             let charApi = this.dataset.apiInputs.split(',');
             charApi.forEach( input => {
                 addToModalTable(input)
