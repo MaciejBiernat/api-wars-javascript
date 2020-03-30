@@ -14,6 +14,10 @@ def get_connection_string():
         host=url.hostname,
         port=url.port
     )
+    if connection:
+        return connection
+    else:
+        raise KeyError('Some necessary environment variable(s) are not defined')
 
 # def get_connection_string():
 #     # setup connection string
