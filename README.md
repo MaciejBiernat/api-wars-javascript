@@ -6,8 +6,8 @@ My task was to create a little web application which shows data about the Star W
 
 ## Technologies
 
--JavaScript
--Python
+- JavaScript
+- Python
 
 
 ## Tasks
