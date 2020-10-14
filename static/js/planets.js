@@ -95,7 +95,7 @@ let addToModalTable = function (inputApi){
         .then((data) => {
             displayModal(data);
         })
-};
+};q
 
 let displayModal = function (charData) {
     let trModal = `<tr>`;
