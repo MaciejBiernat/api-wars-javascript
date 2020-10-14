@@ -1,16 +1,16 @@
 # API Wars 
 
 
-##The Project
+## The Project
 My task was to create a little web application which shows data about the Star Wars universe, store visitor preferences with cookies and handle user login with sessions using 
 
-##Technologies
+## Technologies
 
 -JavaScript
 -Python
 
 
-##Tasks
+## Tasks
 It is advised to create the application in the following steps:
 
 Create a web-server. This should render an HTML file containing a table with all the Planets in the Star Wars universe with these data:
@@ -34,5 +34,5 @@ a registration page accessible from the main page through which visitors can cre
 a login page accessible from the main page where the user can log in,
 display username and logout link in the header.
 
-##The Data
+## The Data
 Every Star Wars related information can be fetched from https://swapi.dev/'s API. This site provides an endpoint with no authentication needed.
